@@ -1,0 +1,34 @@
+USE CLASSICMODELS;
+
+DROP PROCEDURE IF EXISTS GETCUSTOMERLEVEL;
+
+DELIMITER //
+
+-- If you choose to use the CASE statement, you have to make sure that at least one of the CASE condition is matched. 
+-- Otherwise, you need to define an error handler to catch the error. 
+-- Recall that you do not have to do this with the IF statement
+
+CREATE PROCEDURE GETCUSTOMERLEVEL(IN  P_CUSTOMERNUMBER INT(11), OUT P_CUSTOMERLEVEL  VARCHAR(10))   
+  BEGIN
+      DECLARE CREDITLIM DOUBLE;
+   
+      SELECT CREDITLIMIT INTO CREDITLIM FROM CUSTOMERS
+      WHERE CUSTOMERNUMBER = P_CUSTOMERNUMBER;
+   
+      CASE  
+       WHEN CREDITLIM > 50000 THEN 
+          SET P_CUSTOMERLEVEL = 'PLATINUM';
+       WHEN (CREDITLIM <= 50000 AND CREDITLIM >= 10000) THEN
+          SET P_CUSTOMERLEVEL = 'GOLD';
+       WHEN CREDITLIM < 10000 THEN
+          SET P_CUSTOMERLEVEL = 'SILVER';
+       ELSE 
+          SET P_CUSTOMERLEVEL = 'N/A';
+       END CASE;
+   
+  END//
+
+DELIMITER ;
+
+CALL GETCUSTOMERLEVEL(107, @CUSTOMERLEVEL);
+SELECT @CUSTOMERLEVEL;
