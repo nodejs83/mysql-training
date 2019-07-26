@@ -1,1 +1,1 @@
-CURSOR
+MySQL handler precedence
