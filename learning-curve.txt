@@ -1,1 +1,1 @@
-MySQL handler precedence
+Working with MySQL Scheduled Event
