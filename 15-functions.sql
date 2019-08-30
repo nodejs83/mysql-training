@@ -6,6 +6,10 @@ USE CLASSICMODELS;
 DROP FUNCTION IF EXISTS CUSTOMERLEVEL;
 
 DELIMITER //
+
+-- When you create a function, by default is NOT DETERMINISTIC, which means that for each execution could the code will 
+-- be executed again. In the other hand, DETERMINISTIC will check if the parameters are the same and if is that condition 
+-- comes true, will return the same result as before without executing again the code
  
 CREATE FUNCTION CUSTOMERLEVEL(P_CREDITLIMIT DOUBLE) RETURNS VARCHAR(10)
     DETERMINISTIC
